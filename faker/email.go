@@ -2,7 +2,7 @@ package faker
 
 import (
 	"fmt"
-	"github.com/tjarratt/babble"
+	"github.com/nwtgck/go-fakelish"
 	"math/rand"
 	"strings"
 )
@@ -15,13 +15,11 @@ func GetEmail(originalEmail string, seed int64) string {
 	seed = calculateSeed(originalEmail, seed)
 	rand.Seed(seed)
 
-	babbler := babble.NewBabbler()
-	babbler.Separator = "_"
-	babbler.Count = 1
+	minLength := 5
+	maxLength := 10
+	username := fakelish.GenerateFakeWord(minLength, maxLength)
+	domain := fakelish.GenerateFakeWord(minLength, maxLength)
 
-	username := babbler.Babble()
-	babbler.Count = 2
-	domain := babbler.Babble()
 	tld := TLDs[rand.Intn(len(TLDs))]
 	email := fmt.Sprintf("%s@%s.%s", username, domain, tld)
 	email = sanitizeEmail(email)
