@@ -6,12 +6,13 @@ import (
 )
 
 var (
-	femaleFirstNames *data_structures.WeightedCollection
-	maleFirstNames   *data_structures.WeightedCollection
-	lastNames        *data_structures.WeightedCollection
-	age              *data_structures.WeightedIntCollection
-	maleCountBTree   *data_structures.BTree
-	femaleCountBTree *data_structures.BTree
+	femaleFirstNames        *data_structures.WeightedCollection
+	maleFirstNames          *data_structures.WeightedCollection
+	lastNames               *data_structures.WeightedCollection
+	age                     *data_structures.WeightedIntCollection
+	maleCountBTree          *data_structures.BTree
+	femaleCountBTree        *data_structures.BTree
+	englishWordsMarkovChain *data_structures.MarkovChain
 )
 
 func getFemaleFirstNames() *data_structures.WeightedCollection {
@@ -54,4 +55,11 @@ func getFemaleCountBTree() *data_structures.BTree {
 		femaleCountBTree = data_structures.NewBTree(data.FemaleNames)
 	}
 	return femaleCountBTree
+}
+
+func getEnglishWordsMarkovChain() *data_structures.MarkovChain {
+	if englishWordsMarkovChain == nil {
+		englishWordsMarkovChain = data_structures.NewMarkovChain(data.EnglishWords)
+	}
+	return englishWordsMarkovChain
 }

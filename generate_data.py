@@ -29,7 +29,7 @@ def generate_first_names():
         f.write("var FemaleNames = map[string]int{\n")
         min_weight = min(female_data.values())
         for name, weight in female_data.items():
-            weight = max(1, int(weight/min_weight))
+            weight = max(1, int(weight / min_weight))
             name = name.capitalize()
             f.write('\t"' + name + '": ' + str(weight) + ",\n")
         f.write("}\n")
@@ -39,7 +39,7 @@ def generate_first_names():
         f.write("var MaleNames = map[string]int{\n")
         min_weight = min(male_data.values())
         for name, weight in male_data.items():
-            weight = max(1, int(weight/min_weight))
+            weight = max(1, int(weight / min_weight))
             name = name.capitalize()
             f.write('\t"' + name + '": ' + str(weight) + ",\n")
         f.write("}\n")
@@ -81,7 +81,7 @@ def generate_ages():
         f.write("var Ages = map[int]int{\n")
         min_weight = min(ages.values())
         for age, weight in ages.items():
-            weight = max(1, int(weight/min_weight))
+            weight = max(1, int(weight / min_weight))
             f.write('\t' + str(age) + ': ' + str(weight) + ",\n")
         f.write("}\n")
 
@@ -104,7 +104,7 @@ def generate_last_names():
         f.write("var LastNames = map[string]int{\n")
         min_weight = min(surnames.values())
         for name, weight in surnames.items():
-            weight = max(1, int(weight/min_weight))
+            weight = max(1, int(weight / min_weight))
             name = name.capitalize()
             f.write('\t"' + name + '": ' + str(weight) + ",\n")
         f.write("}\n")
@@ -161,14 +161,66 @@ def generate_locations():
                 location["city"] + '", "' +
                 location["state"] + '", "' +
                 location["stateISO"] + '", ' +
-                '[]string{'+postal_codes_string+'}, ' +
+                '[]string{' + postal_codes_string + '}, ' +
                 location["latitude"] + ', ' +
                 location["longitude"] + "},\n"
             )
         f.write("}\n")
 
 
-# generate_first_names()
-# generate_last_names()
-# generate_ages()
+class MarkovChain:
+    def __init__(self):
+        self.sub_chains = {}
+        self.weights = {}
+
+    def json(self) -> dict:
+        data = {
+            "weights": self.weights,
+            "sub_chains": {}
+        }
+        for c in self.sub_chains.keys():
+            data["sub_chains"][c] = self.sub_chains[c].json()
+        return data
+
+    def add(self, word):
+        if len(word) == 0:
+            self.weights['\\n'] = 1
+            return
+
+        c, remaining = word[0], word[1:]
+        if c not in self.weights:
+            self.weights[c] = 0
+        self.weights[c] += 1
+
+        if c not in self.sub_chains:
+            self.sub_chains[c] = MarkovChain()
+        self.sub_chains[c].add(remaining)
+
+
+def generate_english_words():
+    words = []
+    with open("words.txt") as f:
+        for word in f.readlines():
+            word = word.strip().lower()
+            bad_word = False
+            for bad_char in ["'"]:
+                if bad_char in word:
+                    bad_word = True
+            if bad_word:
+                continue
+            words.append(word)
+
+
+    with open("./faker/data/english_words.go", "w") as f:
+        f.write("package data\n\n")
+        f.write("var EnglishWords = []string{\n")
+        for word in words:
+            f.write('\t"' + word + '",\n')
+        f.write("}\n")
+
+
+generate_first_names()
+generate_last_names()
+generate_ages()
 generate_locations()
+generate_english_words()

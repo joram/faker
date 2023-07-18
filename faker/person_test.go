@@ -16,7 +16,7 @@ func TestGetPerson(t *testing.T) {
 		MiddleName: "Laurier",
 		LastName:   "Timko",
 		Birthday:   time.Date(1989, time.March, 12, 6, 59, 12, 0, time.Local),
-		Email:      "calker@clogly.net",
+		Email:      "grouses@versicles.ca",
 		Phone:      "1-319-772-5167",
 		Address: Address{
 			Country:      "CA",

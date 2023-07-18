@@ -17,6 +17,11 @@ func (wg *WeightedCollection) GetRandomName(seed int64) string {
 	return wg.names[index]
 }
 
+func (wg *WeightedCollection) Add(c string) {
+	wg.names = append(wg.names, c)
+	wg.indices = append(wg.indices, len(wg.names)-1)
+}
+
 func NewWeightedCollection(data *map[string]int) *WeightedCollection {
 	wc := &WeightedCollection{
 		names:   []string{},
