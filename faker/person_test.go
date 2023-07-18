@@ -4,7 +4,6 @@ import (
 	"github.com/davecgh/go-spew/spew"
 	"reflect"
 	"testing"
-	"time"
 )
 
 func TestGetPerson(t *testing.T) {
@@ -15,7 +14,7 @@ func TestGetPerson(t *testing.T) {
 		FirstName:  "Radin",
 		MiddleName: "Laurier",
 		LastName:   "Timko",
-		Birthday:   time.Date(1989, time.March, 12, 6, 59, 12, 0, time.Local),
+		Birthday:   GetBirthday(0),
 		Email:      "grouses@versicles.ca",
 		Phone:      "1-319-772-5167",
 		Address: Address{
