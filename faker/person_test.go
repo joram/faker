@@ -1,14 +1,12 @@
 package faker
 
 import (
-	"github.com/davecgh/go-spew/spew"
 	"reflect"
 	"testing"
 )
 
 func TestGetPerson(t *testing.T) {
 	person := GetPerson(0)
-	spew.Dump(person)
 
 	expected := Person{
 		FirstName:  "Radin",
