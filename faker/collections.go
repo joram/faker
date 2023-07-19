@@ -13,6 +13,8 @@ var (
 	maleCountBTree          *data_structures.BTree
 	femaleCountBTree        *data_structures.BTree
 	englishWordsMarkovChain *data_structures.MarkovChain
+	streetNames             *data_structures.MarkovChain
+	streetSuffixes          *data_structures.MarkovChain
 )
 
 func getFemaleFirstNames() *data_structures.WeightedCollection {
@@ -62,4 +64,18 @@ func getEnglishWordsMarkovChain() *data_structures.MarkovChain {
 		englishWordsMarkovChain = data_structures.NewMarkovChain(data.EnglishWords)
 	}
 	return englishWordsMarkovChain
+}
+
+func getStreetNames() *data_structures.MarkovChain {
+	if streetNames == nil {
+		streetNames = data_structures.NewMarkovChain(data.StreetNames)
+	}
+	return streetNames
+}
+
+func getStreetSuffixes() *data_structures.MarkovChain {
+	if streetSuffixes == nil {
+		streetSuffixes = data_structures.NewMarkovChain(data.StreetSuffixes)
+	}
+	return streetSuffixes
 }

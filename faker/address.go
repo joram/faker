@@ -6,12 +6,13 @@ import (
 )
 
 type Address struct {
-	Country      string
-	State        string
-	City         string
-	StreetNumber string
-	Street       string
-	ZipCode      string
+	Country string
+	State   string
+	City    string
+	Number  string
+	Name    string
+	Suffix  string
+	ZipCode string
 }
 
 func GetAddress(seed int64) Address {
@@ -26,11 +27,12 @@ func GetAddress(seed int64) Address {
 	postalCode := location.PostalCodes[i]
 
 	return Address{
-		Country:      "CA",
-		State:        location.Province,
-		City:         location.City,
-		StreetNumber: getRandomNumber("", 4),
-		Street:       "fake street",
-		ZipCode:      postalCode,
+		Country: "CA",
+		State:   location.Province,
+		City:    location.City,
+		Number:  getRandomNumber("", 4),
+		Name:    getStreetNames().GetRandomWord(seed),
+		Suffix:  getStreetSuffixes().GetRandomWord(seed),
+		ZipCode: postalCode,
 	}
 }

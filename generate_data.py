@@ -218,9 +218,44 @@ def generate_english_words():
             f.write('\t"' + word + '",\n')
         f.write("}\n")
 
+def generate_street_names():
+    names = set()
+    suffixes = set()
+    # latitude,longitude,source_id,id,group_id,street_no,street,str_name,str_type,str_dir,unit,city,postal_code,full_addr,city_pcs,str_name_pcs,str_type_pcs,str_dir_pcs,csduid,csdname,pruid,provider
+    with open("./ODA_BC_v1.csv") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            names.add(row["str_name"].capitalize())
+            suffixes.add(row["str_type"].capitalize())
+    if "" in names:
+        names.remove("")
+    if "" in suffixes:
+        suffixes.remove("")
 
-generate_first_names()
-generate_last_names()
-generate_ages()
-generate_locations()
-generate_english_words()
+    with open("./faker/data/street_names.go", "w") as f:
+        f.write("package data\n\n")
+        f.write("var StreetNames = []string{\n")
+        for name in names:
+            f.write('\t"' + name + '",\n')
+        f.write("}\n")
+
+    with open("./faker/data/street_suffixes.go", "w") as f:
+        f.write("package data\n\n")
+        f.write("var StreetSuffixes = []string{\n")
+        for suffix in suffixes:
+            f.write('\t"' + suffix + '",\n')
+        f.write("}\n")
+
+funcs = [
+    # ("first_names", generate_first_names),
+    # ("last_names", generate_last_names),
+    # ("ages", generate_ages),
+    # ("locations", generate_locations),
+    # ("english_words", generate_english_words),
+    ("street_names", generate_street_names),
+]
+n = len(funcs)
+for i, (name, func) in enumerate(funcs):
+    print(f"{i+1}/{n} Generating {name}...")
+    func()
+print("Done!")

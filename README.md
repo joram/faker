@@ -46,4 +46,5 @@ returns a random phone number
 
 ## Data Sources
 - stats canada
+- https://www150.statcan.gc.ca/n1/en/pub/46-26-0001/2021001/ODA_BC_v1.zip (for street names and suffixes)
 - https://github.com/djbelieny/geoinfo-dataset/blob/master/full_dataset_csv.zip
