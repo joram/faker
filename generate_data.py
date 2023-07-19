@@ -151,6 +151,8 @@ def generate_locations():
         for key in locations.keys():
             location = locations[key]
             postal_codes_for_location = postal_codes[key]
+            if len(postal_codes_for_location) == 0:
+                continue
             postal_codes_string = ""
             for postal_code in postal_codes_for_location:
                 postal_codes_string += '"' + postal_code + '", '
@@ -250,9 +252,9 @@ funcs = [
     # ("first_names", generate_first_names),
     # ("last_names", generate_last_names),
     # ("ages", generate_ages),
-    # ("locations", generate_locations),
+    ("locations", generate_locations),
     # ("english_words", generate_english_words),
-    ("street_names", generate_street_names),
+    # ("street_names", generate_street_names),
 ]
 n = len(funcs)
 for i, (name, func) in enumerate(funcs):

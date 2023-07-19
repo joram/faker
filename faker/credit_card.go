@@ -41,8 +41,8 @@ func getRandomNumber(prefix string, length int) string {
 }
 
 func getCreditCardNumber(prefixList []string, lengths []int) string {
-	prefix := prefixList[rand.Intn(len(prefixList)-1)]
-	length := lengths[rand.Intn(len(lengths)-1)]
+	prefix := prefixList[rand.Intn(len(prefixList))]
+	length := lengths[rand.Intn(len(lengths))]
 	return getRandomNumber(prefix, length)
 }
 
@@ -51,7 +51,7 @@ func GetCreditCard(seed int64) CreditCard {
 	cvv, _ := strconv.Atoi(getRandomNumber("", 3))
 
 	card := CreditCard{
-		CardType:    cardTypes[rand.Intn(len(cardTypes)-1)],
+		CardType:    cardTypes[rand.Intn(len(cardTypes))],
 		CVV:         cvv,
 		ExpiryMonth: rand.Intn(12) + 1,
 		ExpiryYear:  time.Now().Year() + rand.Intn(10),
